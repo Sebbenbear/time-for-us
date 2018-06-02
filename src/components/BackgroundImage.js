@@ -67,7 +67,16 @@ export class BackgroundImage extends Component {
     }
     
     render() {
+
         let { image, isLoading, error } = this.state;
+
+        const divStyle = {
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            color: 'white',
+            height: '500px'
+        };
 
         if (error) {
             return (
@@ -82,7 +91,7 @@ export class BackgroundImage extends Component {
         }
 
         return (
-            <Image src={image} alt="background" rounded/>
+            <div style={divStyle}></div>
         );
     };
 }
