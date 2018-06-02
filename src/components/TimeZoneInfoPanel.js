@@ -7,6 +7,10 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import { BackgroundImage } from './BackgroundImage';
 import { TimeZoneText } from './TimeZoneText';
 
+const divStyle = {
+    margin: '40px'
+};
+
 export class TimeZoneInfoPanel extends Component {
 
     constructor(props) {
@@ -48,7 +52,7 @@ export class TimeZoneInfoPanel extends Component {
 
     render() {
         return (
-            <div>
+            <div style={divStyle}>
                 <FormGroup controlId="timezone">
                     <ControlLabel>{this.props.title}</ControlLabel>
                     <Autosuggest
