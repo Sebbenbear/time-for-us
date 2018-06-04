@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Image from 'react-bootstrap/lib/Image';
+import { TimeZoneText } from './TimeZoneText';
 
 export class BackgroundImage extends Component {
 
@@ -75,19 +76,21 @@ export class BackgroundImage extends Component {
         }
 
         const divStyle = {
-            backgroundImage: `url(${image})`,
+            background: `linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${image}) no-repeat`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             color: 'white',
-            height: '400px'
+            height: '400px',
         };
       
-        if (isLoading) { // Do animation here.
+        if (isLoading) { // Do animation here
             return <p>Loading ...</p>;
         }
 
         return (
-            <div style={divStyle}></div>
+            <div style={divStyle}>
+                <TimeZoneText timeZone={this.props.timeZone} />
+            </div>
         );
     };
 }

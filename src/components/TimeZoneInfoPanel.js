@@ -5,7 +5,6 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 
 import { BackgroundImage } from './BackgroundImage';
-import { TimeZoneText } from './TimeZoneText';
 
 const divStyle = {
     margin: '40px'
@@ -61,8 +60,8 @@ export class TimeZoneInfoPanel extends Component {
                         onChange={this.handleChange}
                         />
                 </FormGroup>
-                <BackgroundImage keyword={this.state.keyword}/>
-                <TimeZoneText timeZone={this.state.timeZone} />
+                <BackgroundImage keyword={this.state.keyword} timeZone={this.state.timeZone}/>
+                {/* <TimeZoneText timeZone={this.state.timeZone} /> */}
             </div>
         );
     }
