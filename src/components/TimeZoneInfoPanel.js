@@ -61,7 +61,6 @@ export class TimeZoneInfoPanel extends Component {
                         />
                 </FormGroup>
                 <BackgroundImage keyword={this.state.keyword} timeZone={this.state.timeZone}/>
-                {/* <TimeZoneText timeZone={this.state.timeZone} /> */}
             </div>
         );
     }

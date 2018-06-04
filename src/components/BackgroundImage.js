@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Image from 'react-bootstrap/lib/Image';
 import { TimeZoneText } from './TimeZoneText';
 
 export class BackgroundImage extends Component {
@@ -54,7 +53,7 @@ export class BackgroundImage extends Component {
                     const numImages = data.results.length;
                     const randomIndex = Math.floor(Math.random() * numImages);
                     this.setState({
-                        image: data.results[randomIndex].urls.small,
+                        image: data.results[randomIndex].urls.regular, //small, full, raw, thumb available
                         isLoading: false
                     });
                 }                
@@ -76,11 +75,11 @@ export class BackgroundImage extends Component {
         }
 
         const divStyle = {
-            background: `linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${image}) no-repeat`,
-            backgroundSize: 'cover',
+            background: `linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.65) 100%), url(${image}) no-repeat`,
             backgroundPosition: 'center',
             color: 'white',
-            height: '400px',
+            height: '300px',
+            backgroundSize: 'cover',
         };
       
         if (isLoading) { // Do animation here

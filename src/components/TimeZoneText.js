@@ -3,12 +3,28 @@ import moment from 'moment-timezone';
 
 export class TimeZoneText extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentTime: moment.tz(moment().format()),
+        };
+    }
+
+    componentDidMount() {
+        setInterval( () => {
+            this.setState({
+                currentTime: moment.tz(moment().format()),
+            })
+        }, 1000);
+    }
+
     render() {
         const timeZone = this.props.timeZone;
-        const momentTimeZone = moment.tz(moment().format(), timeZone);
-
+        const momentTimeZone = moment.tz(this.state.currentTime, timeZone);
+        
         const divStyle = {
-            padding: '10px'
+            padding: '1px'
         };
 
         return (
