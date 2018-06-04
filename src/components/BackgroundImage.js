@@ -70,23 +70,19 @@ export class BackgroundImage extends Component {
 
         let { image, isLoading, error } = this.state;
 
+        if (error) {
+            image = 'media/unknownLocation.jpg';
+        }
+
         const divStyle = {
             backgroundImage: `url(${image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             color: 'white',
-            height: '500px'
+            height: '400px'
         };
-
-        if (error) {
-            return (
-            <div>
-                <p>{error.message}</p>;
-                <Image src={image} alt="background" rounded/>
-            </div>)
-        }
       
-        if (isLoading) {
+        if (isLoading) { // Do animation here.
             return <p>Loading ...</p>;
         }
 
