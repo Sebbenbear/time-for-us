@@ -22,7 +22,8 @@ export class TimeZoneText extends Component {
     render() {
         const timeZone = this.props.timeZone;
         const momentTimeZone = moment.tz(this.state.currentTime, timeZone);
-        
+        const city = this.props.city.toUpperCase();
+
         const divStyle = {
             padding: '1px'
         };
@@ -30,10 +31,8 @@ export class TimeZoneText extends Component {
         return (
             <div style={divStyle}>
                 <h1>{momentTimeZone.format('h:mm:ss a')}</h1>
-                <div>
-                    <h3>{timeZone}</h3>
-                    <h5>{momentTimeZone.format('MMMM Do YYYY')}</h5>
-                </div>
+                <h5>{momentTimeZone.format('MMMM Do YYYY')}</h5>
+                <h3>{city}</h3>
             </div>
         );
     }

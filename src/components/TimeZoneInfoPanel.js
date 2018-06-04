@@ -14,15 +14,16 @@ export class TimeZoneInfoPanel extends Component {
 
     constructor(props) {
         super(props);
-
-        const myKeyword = this.extractKeyword(this.props.timeZone)
+        
+        const timeZone = localStorage.getItem(this.props.timeZoneId);
+        const myKeyword = this.extractKeyword(timeZone);
     
         this.state = {
             isLoading: false,
             error: null,
             keyword: myKeyword,
             timeZoneList: moment.tz.names(),
-            timeZone: this.props.timeZone
+            timeZone: timeZone
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -46,6 +47,7 @@ export class TimeZoneInfoPanel extends Component {
                 timeZone: event,
                 keyword: this.extractKeyword(event)
             });
+            localStorage.setItem(this.props.timeZoneId, event);
         }
     }
 

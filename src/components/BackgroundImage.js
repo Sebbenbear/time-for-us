@@ -88,7 +88,7 @@ export class BackgroundImage extends Component {
 
         return (
             <div style={divStyle}>
-                <TimeZoneText timeZone={this.props.timeZone} />
+                <TimeZoneText timeZone={this.props.timeZone} city={this.props.keyword} />
             </div>
         );
     };

@@ -9,6 +9,14 @@ import { TimeZoneInfoPanel } from './components/TimeZoneInfoPanel';
 class App extends Component {
 
   render() {
+    if (!localStorage.getItem('timeZone1')) {
+      localStorage.setItem('timeZone1', 'Australia/Sydney');
+    }
+
+    if (!localStorage.getItem('timeZone2')) {
+      localStorage.setItem('timeZone2', 'America/New_York');
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -19,10 +27,10 @@ class App extends Component {
         <Grid>
           <Row className="show-grid">
             <Col md={6}>
-              <TimeZoneInfoPanel title="Their Time Zone" timeZone='Australia/Sydney'/>
+              <TimeZoneInfoPanel title="Their Time Zone" timeZoneId='timeZone1'/>
             </Col>
             <Col md={6}>
-              <TimeZoneInfoPanel title="My Time Zone" timeZone='America/New_York'/>
+              <TimeZoneInfoPanel title="My Time Zone" timeZoneId='timeZone2'/>
             </Col>
           </Row>
         </Grid>
