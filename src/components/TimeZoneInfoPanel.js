@@ -3,6 +3,10 @@ import moment from 'moment-timezone';
 import Autosuggest from 'react-bootstrap-autosuggest';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Form from 'react-bootstrap/lib/Form';
 
 import { BackgroundImage } from './BackgroundImage';
 
@@ -16,6 +20,8 @@ export class TimeZoneInfoPanel extends Component {
         super(props);
         
         const timeZone = localStorage.getItem(this.props.timeZoneId);
+        let name = localStorage.getItem(this.props.timeZoneName);
+
         const myKeyword = this.extractKeyword(timeZone);
     
         this.state = {
@@ -23,9 +29,15 @@ export class TimeZoneInfoPanel extends Component {
             error: null,
             keyword: myKeyword,
             timeZoneList: moment.tz.names(),
-            timeZone: timeZone
+            timeZone: timeZone,
+            name: name,
+            isEditingName: false,
+            value: name
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.handleEditChange = this.handleEditChange.bind(this);
+        this.handleEditSubmit = this.handleEditSubmit.bind(this);
     }
 
     extractKeyword(timezone) {
@@ -51,16 +63,65 @@ export class TimeZoneInfoPanel extends Component {
         }
     }
 
+    handleEditClick(event) {
+        this.setState({
+            isEditingName: true
+        });
+    }
+
+    handleEditChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleEditSubmit(event) {
+        event.preventDefault();
+        this.setState({
+            isEditingName: false,
+            name: this.state.value
+        });
+        localStorage.setItem(this.props.timeZoneName, this.state.value);
+    }
+
     render() {
+        let name = this.state.name;
+        if (name !== 'My' && name !== 'Their') {
+            name = name + "'s";
+        }
+
         return (
             <div style={divStyle}>
                 <FormGroup controlId="timezone">
-                    <ControlLabel>{this.props.title}</ControlLabel>
-                    <Autosuggest
-                        datalist={this.state.timeZoneList}
-                        placeholder={this.state.timeZone}
-                        onChange={this.handleChange}
-                        />
+
+                        {/* Only visible when field is entered */}
+                        {/* <Button bsStyle="link">Edit</Button> */}
+                        {!this.state.isEditingName &&
+                        <ControlLabel id='controlLabel'>
+                            {name + ' Time Zone'}
+                            <Button 
+                                bsStyle="link"
+                                onClick={this.handleEditClick}>
+                                <Glyphicon glyph="edit"/></Button>
+                        </ControlLabel>
+                        }
+
+                        {/* Only visible when entering field */}
+                        {this.state.isEditingName &&
+                            <div>
+                            <Form inline onSubmit={this.handleEditSubmit}>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.value}
+                                    onChange={this.handleEditChange}
+                                />
+                            </Form>
+                            </div>
+                        }
+
+                        <Autosuggest
+                            datalist={this.state.timeZoneList}
+                            placeholder={this.state.timeZone}
+                            onChange={this.handleChange}
+                            />
                 </FormGroup>
                 <BackgroundImage keyword={this.state.keyword} timeZone={this.state.timeZone}/>
             </div>

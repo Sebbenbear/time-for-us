@@ -25,7 +25,7 @@ export class TimeZoneText extends Component {
         const city = this.props.city.toUpperCase();
 
         const divStyle = {
-            padding: '1px'
+            padding: '10px'
         };
 
         return (
