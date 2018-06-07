@@ -2,13 +2,23 @@
   text-align: center;
 }
 
+.clock {
+  position: absolute;
+  height: 80px;
+}
+
 .App-logo {
+  position: absolute;
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
+.logoContainer {
+  padding: 10px;
+  margin-right: 80px;
+}
+
 .App-header {
-  /* background-color: #450057; */
   height: 300px;
   padding: 30px; 
   color: white;

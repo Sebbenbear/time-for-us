@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import clock_white from './clock_white.svg';
+import heart from './heart.svg';
 import './App.css';
 
 import Grid from 'react-bootstrap/lib/Grid';
@@ -36,6 +38,10 @@ class App extends Component {
           <h1 className=".App-title">Time For Us</h1>
           <br/>
           <h4 className=".App-intro">Time For Us lets you find the best time to chat to your loved one across countries!</h4>
+          <div className="logoContainer">
+            <img src={heart} className="App-logo" alt="logo" />
+            <img src={clock_white} className="clock" alt="logo" />
+          </div>
         </header>
         <Grid>
           <Row className="show-grid">
