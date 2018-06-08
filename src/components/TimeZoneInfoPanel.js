@@ -7,6 +7,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Form from 'react-bootstrap/lib/Form';
+import TimeForUsLabel from './TimeForUsLabel';
 
 import { BackgroundImage } from './BackgroundImage';
 
@@ -84,19 +85,47 @@ export class TimeZoneInfoPanel extends Component {
 
     render() {
         let name = this.state.name;
+        const them = moment.tz(moment(), this.state.timeZone).toObject();
+        const me = moment().toObject();
+
+        let alertComponent;
+        const isMe = them.hours === me.hours;
+
+        if (!isMe) {
+            if (them.hours < 7) {
+                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={7 - them.hours} status='is asleep' available={false}/>
+            }
+            else if (them.hours < 9) {
+                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={9 - them.hours} status='is awake' available={true}/>
+            }
+            else if (them.hours < 17) {
+                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={17 - them.hours} status='is at work' available={false}/>
+            }
+            else if (them.hours < 22) {
+                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={22 - them.hours} status='has finished work' available={true}/>
+            }
+            else {
+                if (them.hours >= 22) {
+                    alertComponent = <TimeForUsLabel name={name} nextTimeToChat={31 - them.hours} status='is asleep' available={false}/>
+                } else {
+                    alertComponent = <TimeForUsLabel name={name} nextTimeToChat={8 - them.hours} status='is asleep' available={false}/>
+                }
+            }
+        }
+
+        let modName = name;
         if (name !== 'My' && name !== 'Their') {
-            name = name + "'s";
+            modName = name + "'s";
         }
 
         return (
             <div style={divStyle}>
                 <FormGroup controlId="timezone">
-
                         {/* Only visible when field is entered */}
                         {/* <Button bsStyle="link">Edit</Button> */}
                         {!this.state.isEditingName &&
                         <ControlLabel id='controlLabel'>
-                            {name + ' Time Zone'}
+                            {modName + ' Time Zone'}
                             <Button 
                                 bsStyle="link"
                                 onClick={this.handleEditClick}>
@@ -121,9 +150,10 @@ export class TimeZoneInfoPanel extends Component {
                             datalist={this.state.timeZoneList}
                             placeholder={this.state.timeZone}
                             onChange={this.handleChange}
-                            />
+                        />
                 </FormGroup>
                 <BackgroundImage keyword={this.state.keyword} timeZone={this.state.timeZone}/>
+                {!isMe && alertComponent}
             </div>
         );
     }
