@@ -12,7 +12,7 @@ import TimeForUsLabel from './TimeForUsLabel';
 import { BackgroundImage } from './BackgroundImage';
 
 const divStyle = {
-    margin: '40px'
+    margin: '30px'
 };
 
 export class TimeZoneInfoPanel extends Component {
@@ -83,37 +83,79 @@ export class TimeZoneInfoPanel extends Component {
         localStorage.setItem(this.props.timeZoneName, this.state.value);
     }
 
-    render() {
-        let name = this.state.name;
-        const them = moment.tz(moment(), this.state.timeZone).toObject();
-        const me = moment().toObject();
+    /*q
+        Performs the following checks and returns the appropriate message:
 
-        let alertComponent;
-        const isMe = them.hours === me.hours;
+        is weekday, is asleep - morning
+        is weekday, is morning
+        is weekday, at work
+        is weekday, is after work
+        is weekday, asleep - night
 
-        if (!isMe) {
-            if (them.hours < 7) {
-                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={7 - them.hours} status='is asleep' available={false}/>
-            }
-            else if (them.hours < 9) {
-                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={9 - them.hours} status='is awake' available={true}/>
-            }
-            else if (them.hours < 17) {
-                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={17 - them.hours} status='is at work' available={false}/>
-            }
-            else if (them.hours < 22) {
-                alertComponent = <TimeForUsLabel name={name} nextTimeToChat={22 - them.hours} status='has finished work' available={true}/>
-            }
-            else {
-                if (them.hours >= 22) {
-                    alertComponent = <TimeForUsLabel name={name} nextTimeToChat={31 - them.hours} status='is asleep' available={false}/>
-                } else {
-                    alertComponent = <TimeForUsLabel name={name} nextTimeToChat={8 - them.hours} status='is asleep' available={false}/>
-                }
-            }
+        is weekend, is asleep - morning
+        is weekend, is during day
+        is weekend, is asleep - night
+    */
+    getTimeStatus(isMe, them, name) {
+        const momentObject = them.toObject();
+        const isWeekend = them.isoWeekday() === 6 || them.isoWeekday() === 7;
+
+        const FREE_TIME = 0;
+        const WAKE_UP_TIME = 7;
+        const START_WORK_TIME = 9;
+        const FINISH_WORK_TIME = 17;
+        const SLEEP_TIME = 22;
+        const MIDNIGHT_OFFSET_TIME = 31;
+
+        // if it's the same person, same timezone we don't need the extra message
+        if (isMe) {
+            return null;
         }
 
+        // Otherwise, find the appropriate message for the time
+        if (momentObject.hours < WAKE_UP_TIME) {
+            return <TimeForUsLabel name={name} nextTimeToChat={WAKE_UP_TIME - momentObject.hours} status='is asleep' available={false} />;
+        }
+        else if (momentObject.hours < START_WORK_TIME) {
+            return <TimeForUsLabel name={name} nextTimeToChat={FREE_TIME} status='is awake' available={true} />;
+        }
+        else if (momentObject.hours < FINISH_WORK_TIME && !isWeekend) {
+            return <TimeForUsLabel name={name} nextTimeToChat={FINISH_WORK_TIME - momentObject.hours} status='is at work' available={false} />;
+        }
+        else if (momentObject.hours < SLEEP_TIME && !isWeekend) {
+            return <TimeForUsLabel name={name} nextTimeToChat={FREE_TIME} status='has finished work' available={true} />;
+        }
+        else if (momentObject.hours < SLEEP_TIME) {
+            return <TimeForUsLabel name={name} nextTimeToChat={FREE_TIME} status="is free, it's the weekend" available={true} />;
+        }
+        else {
+            return <TimeForUsLabel name={name} nextTimeToChat={MIDNIGHT_OFFSET_TIME - momentObject.hours} status='is asleep' available={false} />;
+        }
+    }
+
+    // Milliseconds can make different objects for the timezone differ, so need to ignore milliseconds when comparing
+    checkSameDateTime(them, me) {
+        const themObj = them.toObject();
+        const meObj = me.toObject();
+
+        return (
+            themObj.hours === meObj.hours &&
+            themObj.minutes === meObj.minutes &&
+            themObj.seconds === meObj.seconds
+        );
+    }
+
+    render() {
+        let name = this.state.name;
+        const them = moment.tz(moment(), this.state.timeZone);
+        const me = moment();
+
+        const isMe = this.checkSameDateTime(them, me);
+
+        const alertComponent = this.getTimeStatus(isMe, them, name);
+
         let modName = name;
+
         if (name !== 'My' && name !== 'Their') {
             modName = name + "'s";
         }
