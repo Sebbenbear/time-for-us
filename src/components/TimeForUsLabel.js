@@ -11,7 +11,7 @@ const TimeForUsLabel = (props) => {
 
     return (
         <Alert bsStyle={alertStyle}>
-            <strong>{name} {status}!</strong> {!available && <p>Free in {nextTimeToChat} hours.</p>}
+            <strong>{name} {status}!</strong> {!available && <p>Free in {nextTimeToChat} hour{nextTimeToChat !== 1 && 's'}.</p>}
         </Alert>
     );
 }
