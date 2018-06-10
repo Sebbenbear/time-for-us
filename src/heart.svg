@@ -2,6 +2,6 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
     <g transform="matrix(1,0,0,1,-0.500014,2.98285)">
-        <path d="M50,50L50,20.193L50,9.4C50,9.4 54.322,-0.503 62.295,2.105C72.061,5.299 68.191,14.162 70,15.4C71.537,16.452 79.687,7.689 86.609,14.4C93.392,20.976 84.609,30 84.609,30L50,50Z" style="fill:rgb(255,151,197);fill-opacity:0;stroke:rgb(222,80,165);stroke-width:5px;"/>
+        <path d="M50,50L50,20.193C50,20.193 50,9.432 50,9.4C50.048,4.244 55.322,-1.503 63.295,1.105C73.061,4.299 68.191,14.162 70,15.4C71.537,16.452 77.936,5.498 86.609,13.4C93.708,19.868 88.751,26.987 84.609,30C84.528,30.059 80.908,32.155 76.039,34.969C65.789,40.893 50,50 50,50Z" style="fill:rgb(255,151,197);fill-opacity:0;stroke:white;stroke-width:5px;"/>
     </g>
 </svg>
