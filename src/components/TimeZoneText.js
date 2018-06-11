@@ -3,38 +3,42 @@ import moment from 'moment-timezone';
 
 export class TimeZoneText extends Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            currentTime: moment.tz(moment(), this.props.timeZone)
-        };
-    }
+    const updatedTime = moment.tz(moment(), this.props.timeZone);
+    this.state = {
+      currentTime: updatedTime
+    };
+  };
 
-    componentDidMount() {
-        setInterval( () => {
-            this.setState({
-                currentTime: moment.tz(moment(), this.props.timeZone)
-            })
-        }, 1000);
-    }
+  componentDidMount() {
+    setInterval( () => {
+      const updatedTime = moment.tz(moment(), this.props.timeZone);
+      this.setState({
+        currentTime: updatedTime
+      });
+    }, 1000);
+  };
 
-    render() {
-        const city = this.props.city.toUpperCase();
-        const currentTime = this.state.currentTime;
+  render() {
+    const city = this.props.city.toUpperCase();
+    const currentTime = this.state.currentTime;
+    const time = currentTime.format('h:mm:ss a');
+    const date = currentTime.format('MMMM Do YYYY');
 
-        const divStyle = {
-            padding: '10px'
-        };
+    const divStyle = {
+      padding: '10px'
+    };
 
-        return (
-            <div style={divStyle}>
-                <h1>{currentTime.format('h:mm:ss a')}</h1>
-                <h5>{currentTime.format('MMMM Do YYYY')}</h5>
-                <h3>{city}</h3>
-            </div>
-        );
-    }
-}
+    return (
+      <div style={divStyle}>
+        <h1>{time}</h1>
+        <h5>{date}</h5>
+        <h3>{city}</h3>
+      </div>
+    );
+  };
+};
 
 export default TimeZoneText;
