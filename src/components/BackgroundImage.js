@@ -74,11 +74,9 @@ export class BackgroundImage extends Component {
     }
 
     const divStyle = {
-      background: `linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.65) 100%), url(${image}) no-repeat`,
-      backgroundPosition: 'center',
+      background: `linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.65) 100%), url(${image}) no-repeat center`,
       color: 'white',
       height: '300px',
-      backgroundSize: 'cover',
     };
 
     return (
