@@ -69,7 +69,7 @@ export class BackgroundImage extends Component {
   render() {
     let { image, isLoading, error } = this.state;
 
-    if (error) {
+    if (isLoading || error) {
       image = 'media/unknownLocation.jpg';
     }
 
@@ -80,10 +80,6 @@ export class BackgroundImage extends Component {
       height: '300px',
       backgroundSize: 'cover',
     };
-
-    if (isLoading) { // Do animation here
-      return <p>Loading ...</p>;
-    }
 
     return (
       <div style={divStyle}>
